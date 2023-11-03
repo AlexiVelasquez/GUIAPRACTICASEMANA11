@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +10,8 @@ namespace GUIAPRACTICASEMANA11
 {
     public class pantallamenu
     {
-        public static string[] numerosescribir = new string[100];
+        public static float[] notas = new float[100];
+        public static float[]numerostotales= new float[100];
         public static int contador = 0;
         public static int pantallaprincipal()
         {
@@ -35,9 +37,9 @@ namespace GUIAPRACTICASEMANA11
                 "Registrar una nota\n" +
                 "================================\n";
             Console.Write(texto);
-            string numero=Operaciones.getTextoPantalla("Ingresa la nota Nro 1:");
+            float notaregistradas=Operaciones.getDecimal("Ingresa la nota N:");
 
-            numerosescribir[contador]= numero;
+            notas[contador] = notaregistradas;
             contador++;
 
             string texto2="================================\n" +
@@ -53,17 +55,39 @@ namespace GUIAPRACTICASEMANA11
         }
         public static int notamayor()
         {
-            
+            float mayor = notas[0];
+            int posicionmayor = 0;
+            for (int i = 0; i < contador; i++)
+            {
+                if (notas[i] > mayor)
+                {
+                    
+                    mayor = notas[i];
+                    posicionmayor =i;
+                }
+            }
             string texto = "================================\n" +
-                "La nota mayor\n" +
-                "================================\n" +
-                "La nota mayor es:8\n"+
-                "15 16[18] 10 12 15 13\n" +
-                "================================\n" +
+            "La nota mayor\n" +
+            "================================\n";
+            Console.Write(texto);
+            Console.WriteLine("La nota mayor es: " + mayor + "\n");
+
+            for (int i = 0; i < contador; i++)
+            {
+                if (i == posicionmayor)
+                {
+
+                    Console.Write("[" + notas[i] + "]");
+
+
+
+                }
+            }
+           string texto2 = "================================\n" +
                 "1: Regresar\n";
 
-            Console.Write(texto);
-            int opcion = Operaciones.getEntero("Ingrese una opcion: ", texto);
+            Console.Write(texto2);
+            int opcion = Operaciones.getEntero("Ingrese una opcion: ", texto2);
             if (opcion == 1) return 0;
 
                 return opcion;
@@ -74,15 +98,36 @@ namespace GUIAPRACTICASEMANA11
         }
         public static int notamenor()
         {
+            float menor = notas[0];
+            int posicionmenor = 0;
+            for (int i = 0; i < contador; i++)
+            {
+                if (notas[i] < menor)
+                {
+
+                    menor = notas[i];
+                    posicionmenor = i;
+                }
+            }
             string texto = "================================\n" +
                 "La nota menor\n" +
                 "================================\n" +
-                "La nota menor es: 10\n" +
-                "15 16 18 [10] 12 15 13\n" +
-                "================================\n" +
-                "1: Regresar\n";
-
+                "La nota menor es:" + menor + "\n";
             Console.Write(texto);
+            for (int i = 0;i < contador; i++)
+            {
+                if(i == posicionmenor)
+                {
+
+                    Console.Write("[" + notas[i] + "] \n");
+
+
+
+                }
+            }
+            string texto2 = "================================\n" +
+            "1: Regresar\n";
+            Console.Write(texto2);
             int opcion = Operaciones.getEntero("Ingrese una opcion: ", texto);
             if (opcion == 1) return 0;
 
@@ -92,22 +137,41 @@ namespace GUIAPRACTICASEMANA11
         }
         public static int buscarnota()
         {
+
             string texto = "================================\n" +
                 "Buscar nota\n" +
-                "================================\n" +
-                "Ingrese la nota a buscar: 12\n" +
-                "La nota está en la posición 4\n" +
-                "0 -> 15\n" +
-                "1 -> 16\n" +
-                "2 -> 18\n" +
-                "3 -> 10\n" +
-                "4 -> [12]\n" +
-                "5 -> 15\n" +
-                "6 -> 13\n" +
-                "================================\n" +
-                "1: Regresar\n";
-
+                "================================\n";
             Console.Write(texto);
+
+            float valorBuscar = Operaciones.getDecimal("Ingrese la nota a buscar: ");
+            int posicionEncontrada = -1;
+
+            for (int i = 0; i < contador; i++)
+            {
+                if (valorBuscar == notas[i])
+                {
+                    posicionEncontrada = i;
+                    break;
+                }
+            }
+            if (posicionEncontrada != -1)
+            {
+                Console.WriteLine("La nota esta en la posicion: " + posicionEncontrada); ;
+                for (int i = 0; i < contador; i++)
+                {
+                    if (i == posicionEncontrada)
+                    {
+
+                        Console.WriteLine(i + " -> [" + notas[i] + "]");
+
+                    }
+
+                }
+            }
+            Console.Write(texto);
+            string texto3 = "================================\n" +
+                "1: Regresar\n";
+            Console.Write(texto3);
             int opcion = Operaciones.getEntero("Ingrese una opcion: ", texto);
             if (opcion == 1) return 0;
 
@@ -146,7 +210,7 @@ namespace GUIAPRACTICASEMANA11
             Console.Write(texto);
             for (int i = 0; i < contador; i++)
             {
-                Console.Write(numerosescribir[i]+" - ");
+                Console.Write(notas[i]+" - ");
 
             }
             Console.WriteLine();
